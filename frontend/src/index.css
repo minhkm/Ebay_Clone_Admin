@@ -1,0 +1,161 @@
+/* eBay Marketplace Design Tokens & Base Reset */
+:root {
+  --ebay-red: #e53238;
+  --ebay-blue: #0064d2;
+  --ebay-yellow: #f5af02;
+  --ebay-green: #86b817;
+  --ebay-primary: #3665f3;
+  --ebay-primary-hover: #2752db;
+  --ebay-primary-light: #eef3ff;
+  
+  --bg-page: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-subtle: #f4f5f7;
+  --bg-hover: #f0f2f5;
+  
+  --border-color: #e5e7eb;
+  --border-light: #f0f0f0;
+  --border-dark: #d1d5db;
+  
+  --text-primary: #191919;
+  --text-secondary: #595959;
+  --text-muted: #8c8c8c;
+  --text-disabled: #bfbfbf;
+  
+  --header-height: 62px;
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 72px;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05);
+  
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* eBay Logo Component Styling */
+.ebay-logo {
+  display: inline-flex;
+  align-items: baseline;
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-size: 24px;
+  line-height: 1;
+  user-select: none;
+  text-decoration: none;
+}
+.ebay-logo .letter-e { color: var(--ebay-red); }
+.ebay-logo .letter-b { color: var(--ebay-blue); }
+.ebay-logo .letter-a { color: var(--ebay-yellow); }
+.ebay-logo .letter-y { color: var(--ebay-green); }
+
+/* Common eBay Card */
+.ebay-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ebay-card:hover {
+  border-color: #d1d5db;
+}
+
+.ebay-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ebay-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ebay-card-body {
+  padding: 20px;
+}
+
+/* Common eBay Button Styles */
+.ebay-btn-primary {
+  background-color: var(--ebay-primary);
+  border-color: var(--ebay-primary);
+  color: #fff;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+}
+.ebay-btn-primary:hover {
+  background-color: var(--ebay-primary-hover) !important;
+  border-color: var(--ebay-primary-hover) !important;
+}
+
+.ebay-btn-outline {
+  border-color: var(--border-dark);
+  color: var(--text-primary);
+  border-radius: var(--radius-full);
+}
+.ebay-btn-outline:hover {
+  border-color: var(--ebay-primary) !important;
+  color: var(--ebay-primary) !important;
+}
+
+/* Badge & Indicator Styles */
+.ebay-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.ebay-badge-pill.primary {
+  background-color: var(--ebay-primary-light);
+  color: var(--ebay-blue);
+}
+.ebay-badge-pill.neutral {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+}
