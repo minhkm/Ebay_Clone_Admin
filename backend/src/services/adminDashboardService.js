@@ -167,6 +167,92 @@ export const getAttentionRequiredService = async () => {
 };
 
 /**
+ * Service to retrieve Recent Orders (Phase 7)
+ */
+export const getRecentOrdersService = async (limit = 8) => {
+  const parsedLimit = Math.min(Math.max(parseInt(limit, 10) || 8, 1), 50);
+
+  const [ordersAgg, totalCount] = await Promise.all([
+    Order.aggregate([
+      { $sort: { createdAt: -1 } },
+      { $limit: parsedLimit },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'buyerId',
+          foreignField: '_id',
+          as: 'buyer',
+        },
+      },
+      { $unwind: { path: '$buyer', preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: 'orderitems',
+          localField: '_id',
+          foreignField: 'orderId',
+          as: 'items',
+        },
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'items.productId',
+          foreignField: '_id',
+          as: 'productDocs',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'productDocs.sellerId',
+          foreignField: '_id',
+          as: 'sellerDocs',
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          totalPrice: 1,
+          status: 1,
+          createdAt: 1,
+          orderDate: 1,
+          buyerId: '$buyer._id',
+          buyerName: { $ifNull: ['$buyer.fullname', '$buyer.username'] },
+          buyerEmail: '$buyer.email',
+          productCount: { $size: '$items' },
+          sellerName: {
+            $ifNull: [
+              { $arrayElemAt: ['$sellerDocs.fullname', 0] },
+              { $arrayElemAt: ['$sellerDocs.username', 0] },
+              'Marketplace Seller',
+            ],
+          },
+          sellerId: { $arrayElemAt: ['$sellerDocs._id', 0] },
+        },
+      },
+    ]),
+    Order.countDocuments({}),
+  ]);
+
+  const orders = ordersAgg.map((item) => ({
+    id: item._id.toString(),
+    buyer: item.buyerName || 'Anonymous Buyer',
+    buyerId: item.buyerId?.toString() || null,
+    seller: item.sellerName || 'Marketplace Seller',
+    sellerId: item.sellerId?.toString() || null,
+    amount: Math.round(item.totalPrice * 100) / 100,
+    status: item.status || 'pending',
+    createdAt: item.createdAt || item.orderDate,
+    productCount: item.productCount || 0,
+  }));
+
+  return {
+    orders,
+    total: totalCount,
+  };
+};
+
+/**
  * Helper to generate continuous time slots for each period type
  */
 function generateTimeSlots(period, startDate, endDate) {
@@ -395,5 +481,6 @@ export default {
   getOrderOverviewService,
   getUserOverviewService,
   getAttentionRequiredService,
+  getRecentOrdersService,
   getAnalyticsService,
 };

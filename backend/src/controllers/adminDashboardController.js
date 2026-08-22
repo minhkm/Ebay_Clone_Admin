@@ -3,6 +3,7 @@ import {
   getOrderOverviewService,
   getUserOverviewService,
   getAttentionRequiredService,
+  getRecentOrdersService,
   getAnalyticsService,
 } from '../services/adminDashboardService.js';
 
@@ -87,6 +88,27 @@ export const getAttentionRequired = async (req, res) => {
 };
 
 /**
+ * Controller to handle Admin Dashboard Recent Orders API (Phase 7)
+ */
+export const getRecentOrders = async (req, res) => {
+  try {
+    const { limit = 8 } = req.query;
+    const data = await getRecentOrdersService(limit);
+    return res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (error) {
+    console.error('[AdminDashboardController] getRecentOrders error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to retrieve recent orders',
+      error: error.message,
+    });
+  }
+};
+
+/**
  * Controller to handle Admin Dashboard Analytics API (period = day|week|month|quarter) (Phase 3)
  */
 export const getAnalytics = async (req, res) => {
@@ -121,5 +143,6 @@ export default {
   getOrderOverview,
   getUserOverview,
   getAttentionRequired,
+  getRecentOrders,
   getAnalytics,
 };

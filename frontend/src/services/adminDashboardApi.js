@@ -31,9 +31,9 @@ export const adminDashboardApi = {
     return response.data;
   },
 
-  // GET /api/admin/dashboard/orders (Recent orders table)
-  getRecentOrders: async (limit = 10) => {
-    const response = await axios.get(`${API_BASE}/orders`, { params: { limit } });
+  // GET /api/admin/dashboard/recent-orders (Recent orders table from MongoDB - Phase 7)
+  getRecentOrders: async (limit = 8) => {
+    const response = await axios.get(`${API_BASE}/recent-orders`, { params: { limit } });
     return response.data;
   },
 

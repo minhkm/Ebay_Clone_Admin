@@ -62,10 +62,58 @@
   border-bottom: 1px solid var(--border-light);
 }
 
-.order-id-cell {
+.order-id-cell,
+.order-id-code {
   font-family: monospace;
   font-weight: 600;
   color: var(--ebay-blue);
+  background-color: #f0f5ff;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
+.buyer-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.seller-name {
+  color: var(--text-secondary);
+}
+
+.order-amount {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.order-status-tag {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize;
+  border-radius: 12px !important;
+  padding: 1px 10px !important;
+}
+
+.order-date-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.orders-loading-box {
+  padding: 20px 24px;
+}
+
+.orders-error-box {
+  padding: 16px 20px;
+}
+
+.orders-error-retry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
 }
 
 .orders-empty-container {
