@@ -5,38 +5,84 @@ import {
   getUserOverview,
   getAttentionRequired,
   getRecentOrders,
+  getSystemHealth,
   getAnalytics,
+  getUsers,
+  getUserById,
+  lockUser,
+  unlockUser,
+  approveUser,
+  getProducts,
+  getProductById,
+  hideProduct,
+  unhideProduct,
+  getOrders,
+  getOrderById,
+  getReturns,
+  getReturnById,
+  approveReturn,
+  rejectReturn,
+  getReviews,
+  getReviewById,
+  hideReview,
+  getDisputes,
+  getDisputeById,
+  resolveDispute,
+  partialRefundDispute,
 } from '../controllers/adminDashboardController.js';
 
 const router = express.Router();
 
-// GET /api/admin/dashboard/overview (Phase 2)
+// DASHBOARD MODULE ROUTES (Phases 2 - 8)
 router.get('/overview', getOverview);
-
-// GET /api/admin/dashboard/order-overview (Phase 4)
 router.get('/order-overview', getOrderOverview);
-
-// GET /api/admin/dashboard/user-overview (Phase 5)
 router.get('/user-overview', getUserOverview);
-
-// GET /api/admin/dashboard/attention-required (Phase 6)
 router.get('/attention-required', getAttentionRequired);
 router.get('/tasks', getAttentionRequired);
-
-// GET /api/admin/dashboard/recent-orders (Phase 7)
 router.get('/recent-orders', getRecentOrders);
-router.get('/orders', getRecentOrders);
-
-// GET /api/admin/dashboard/analytics (Phase 3)
+router.get('/system-health', getSystemHealth);
 router.get('/analytics', getAnalytics);
 
-// Placeholders for future phases (Phase 8+)
-router.get('/activity', (req, res) => {
-  res.status(501).json({ success: false, message: 'Not implemented in Phase 7' });
-});
+// PHASE 9 — 6 MANAGEMENT MODULE ROUTES
 
-router.get('/system-health', (req, res) => {
-  res.status(501).json({ success: false, message: 'Not implemented in Phase 7' });
-});
+// 1. User Management
+router.get('/users', getUsers);
+router.get('/users/:id', getUserById);
+router.post('/users/:id/lock', lockUser);
+router.post('/users/:id/unlock', unlockUser);
+router.post('/users/:id/approve', approveUser);
+
+// 2. Product Management (Supports /products and /listings)
+router.get('/products', getProducts);
+router.get('/listings', getProducts);
+router.get('/products/:id', getProductById);
+router.get('/listings/:id', getProductById);
+router.post('/products/:id/hide', hideProduct);
+router.post('/products/:id/unhide', unhideProduct);
+router.post('/listings/:id/hide', hideProduct);
+router.post('/listings/:id/unhide', unhideProduct);
+
+// 3. Order Management
+router.get('/orders', getOrders);
+router.get('/orders/:id', getOrderById);
+
+// 4. Return Management
+router.get('/returns', getReturns);
+router.get('/returns/:id', getReturnById);
+router.post('/returns/:id/approve', approveReturn);
+router.get('/returns/:id/approve', approveReturn);
+router.post('/returns/:id/reject', rejectReturn);
+router.get('/returns/:id/reject', rejectReturn);
+
+// 5. Review Moderation
+router.get('/reviews', getReviews);
+router.get('/reviews/:id', getReviewById);
+router.post('/reviews/:id/hide', hideReview);
+
+// 6. Dispute Resolution
+router.get('/disputes', getDisputes);
+router.get('/disputes/:id', getDisputeById);
+router.post('/disputes/:id/resolve', resolveDispute);
+router.post('/disputes/:id/partial-refund', partialRefundDispute);
 
 export default router;

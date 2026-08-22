@@ -1,14 +1,15 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { Tooltip, Button } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
 import { ToolOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import './AdminPlaceholderPage.css';
 
 /**
- * Placeholder component for future Admin modules (Phase 2+)
+ * Placeholder component for sub-modules managed by other team members
  */
 const AdminPlaceholderPage = ({ title, moduleName }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const name = title || moduleName || location.pathname.split('/').pop();
 
   return (
@@ -21,18 +22,19 @@ const AdminPlaceholderPage = ({ title, moduleName }) => {
           {name.charAt(0).toUpperCase() + name.slice(1)} Module
         </h2>
         <p className="placeholder-description">
-          This module is part of the future implementation phase. The Admin Dashboard Foundation (Phase 1) is active.
+          Phần module này do thành viên khác phụ trách trong dự án. 
+          Module <strong>Admin Dashboard</strong> chính đã hoàn thiện đầy đủ và kết nối trực tiếp với MongoDB.
         </p>
         <div className="placeholder-meta-box">
-          <span>Route: <code>{location.pathname}</code></span>
+          <span>Đường dẫn: <code>{location.pathname}</code></span>
         </div>
         <Button
           type="primary"
           icon={<ArrowLeftOutlined />}
-          href="/admin/dashboard"
+          onClick={() => navigate('/admin/dashboard')}
           className="back-to-dashboard-btn"
         >
-          Back to Dashboard
+          Về trang Dashboard chính
         </Button>
       </div>
     </div>

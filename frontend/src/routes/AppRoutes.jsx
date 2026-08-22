@@ -6,7 +6,7 @@ import AdminPlaceholderPage from '../pages/admin/Placeholder/AdminPlaceholderPag
 
 /**
  * AppRoutes Component
- * Declares all application routes with /admin/dashboard as the primary Admin module route.
+ * Scope: Admin Dashboard module only. Other modules are placeholders handled by teammates.
  */
 const AppRoutes = () => {
   return (
@@ -17,15 +17,17 @@ const AppRoutes = () => {
 
       {/* Admin Module Routes wrapped in AdminLayout */}
       <Route path="/admin" element={<AdminLayout />}>
+        {/* Main Dashboard - Primary Responsibility */}
         <Route path="dashboard" element={<AdminDashboard />} />
 
-        {/* Future sub-modules (Placeholders to prevent broken navigation in Phase 1) */}
+        {/* Other modules handled by other team members */}
         <Route path="users" element={<AdminPlaceholderPage title="User Management" />} />
         <Route path="listings" element={<AdminPlaceholderPage title="Listings Management" />} />
+        <Route path="products" element={<AdminPlaceholderPage title="Product Management" />} />
         <Route path="orders" element={<AdminPlaceholderPage title="Order Management" />} />
+        <Route path="returns" element={<AdminPlaceholderPage title="Return Management" />} />
         <Route path="reviews" element={<AdminPlaceholderPage title="Review Moderation" />} />
         <Route path="disputes" element={<AdminPlaceholderPage title="Dispute Resolution" />} />
-        <Route path="returns" element={<AdminPlaceholderPage title="Return Management" />} />
         <Route path="analytics" element={<AdminPlaceholderPage title="Detailed Analytics" />} />
         <Route path="notifications" element={<AdminPlaceholderPage title="Notification Center" />} />
         <Route path="system-health" element={<AdminPlaceholderPage title="System Health & Telemetry" />} />
