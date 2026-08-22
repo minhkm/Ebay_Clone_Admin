@@ -73,16 +73,17 @@
   background-color: #fafbfc;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  padding: 12px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 72px;
-  transition: border-color 0.15s ease;
+  min-height: 76px;
+  transition: all 0.15s ease;
 }
 
 .order-status-item:hover {
   border-color: #d1d5db;
+  background-color: #ffffff;
 }
 
 .status-header {
@@ -92,8 +93,8 @@
 }
 
 .status-bullet {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }
 
@@ -117,7 +118,7 @@
 .user-segment-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .user-segment-row {
@@ -128,11 +129,12 @@
   background-color: #fafbfc;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  transition: border-color 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .user-segment-row:hover {
   border-color: #d1d5db;
+  background-color: #ffffff;
 }
 
 .segment-info {
@@ -148,16 +150,16 @@
 }
 
 .segment-desc {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-muted);
 }
 
 .segment-count-badge {
   background-color: #ffffff;
   border: 1px solid var(--border-color);
-  padding: 4px 12px;
+  padding: 3px 12px;
   border-radius: var(--radius-sm);
-  min-width: 44px;
+  min-width: 40px;
   text-align: center;
 }
 

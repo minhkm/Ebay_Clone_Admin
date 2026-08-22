@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { AlertOutlined, WarningOutlined, ReloadOutlined, CheckCircleOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
+import { AlertOutlined, WarningOutlined, ReloadOutlined, CheckCircleOutlined, DownOutlined, UpOutlined, RightOutlined } from '@ant-design/icons';
 import { Button, Skeleton, Alert, Tag } from 'antd';
 import adminDashboardApi from '../../../../services/adminDashboardApi';
 import { formatNumberVN } from '../../../../utils/currencyFormatter';
@@ -7,7 +7,7 @@ import './AttentionPanel.css';
 
 /**
  * Attention Required Panel Component
- * Phase 6: Connected to real MongoDB queries for Return Requests, Disputes, Reports & Approvals.
+ * Displays real actionable items needing admin review.
  */
 const AttentionPanel = () => {
   const [loading, setLoading] = useState(true);
@@ -55,8 +55,7 @@ const AttentionPanel = () => {
       count: attentionData.activeDisputes?.count || 0,
       items: attentionData.activeDisputes?.items || [],
       severity: (attentionData.activeDisputes?.count || 0) > 0 ? 'high' : 'neutral',
-      path: '/admin/disputes?filter=open',
-      emptyText: 'No active disputes requiring arbitration',
+      path: '/admin/disputes',
     },
     {
       id: 'returns',
@@ -64,8 +63,7 @@ const AttentionPanel = () => {
       count: attentionData.returnRequests?.count || 0,
       items: attentionData.returnRequests?.items || [],
       severity: (attentionData.returnRequests?.count || 0) > 0 ? 'medium' : 'neutral',
-      path: '/admin/returns?filter=pending',
-      emptyText: 'No pending return requests',
+      path: '/admin/returns',
     },
     {
       id: 'sellers',
@@ -73,8 +71,7 @@ const AttentionPanel = () => {
       count: attentionData.pendingSellerApprovals?.count || 0,
       items: attentionData.pendingSellerApprovals?.items || [],
       severity: (attentionData.pendingSellerApprovals?.count || 0) > 0 ? 'high' : 'neutral',
-      path: '/admin/users?filter=pending-approval',
-      emptyText: 'All seller accounts and stores are reviewed',
+      path: '/admin/users',
     },
     {
       id: 'listings',
@@ -82,8 +79,7 @@ const AttentionPanel = () => {
       count: attentionData.reportedProducts?.count || 0,
       items: attentionData.reportedProducts?.items || [],
       severity: (attentionData.reportedProducts?.count || 0) > 0 ? 'medium' : 'neutral',
-      path: '/admin/listings?filter=reported',
-      emptyText: 'No reported listings flagged for violation',
+      path: '/admin/listings',
     },
     {
       id: 'reviews',
@@ -91,8 +87,7 @@ const AttentionPanel = () => {
       count: attentionData.reportedReviews?.count || 0,
       items: attentionData.reportedReviews?.items || [],
       severity: (attentionData.reportedReviews?.count || 0) > 0 ? 'low' : 'neutral',
-      path: '/admin/reviews?filter=flagged',
-      emptyText: 'No reported reviews flagged',
+      path: '/admin/reviews',
     },
   ];
 
@@ -106,7 +101,7 @@ const AttentionPanel = () => {
           <div>
             <h3 className="ebay-card-title">Attention Required</h3>
             <span className="attention-subtitle">
-              {loading ? 'Loading...' : `${formatNumberVN(attentionData.total)} action items requiring administrator review`}
+              {loading ? 'Loading items...' : `${formatNumberVN(attentionData.total)} action items requiring administrator review`}
             </span>
           </div>
         </div>
@@ -154,25 +149,24 @@ const AttentionPanel = () => {
                     </div>
 
                     <div className="task-actions">
-                      <span className="task-count">
-                        {loading ? <Skeleton.Input active size="small" style={{ width: 30, height: 18 }} /> : formatNumberVN(task.count)}
+                      <span className={`task-count-badge ${task.count > 0 ? 'has-count' : 'zero-count'}`}>
+                        {loading ? <Skeleton.Input active size="small" style={{ width: 20, height: 16 }} /> : formatNumberVN(task.count)}
                       </span>
                       {hasItems ? (
                         <Button
                           size="small"
-                          className="ebay-task-btn"
-                          icon={isExpanded ? <UpOutlined /> : <DownOutlined />}
+                          className={`ebay-task-btn ${isExpanded ? 'active' : ''}`}
                           onClick={() => toggleExpand(task.id)}
                         >
-                          {isExpanded ? 'Hide' : 'Details'}
+                          View {isExpanded ? <UpOutlined style={{ fontSize: 10, marginLeft: 2 }} /> : <DownOutlined style={{ fontSize: 10, marginLeft: 2 }} />}
                         </Button>
                       ) : (
                         <Button
                           size="small"
-                          className="ebay-task-btn disabled"
-                          disabled
+                          className="ebay-task-btn"
+                          onClick={() => message.info(`No pending ${task.label.toLowerCase()}`)}
                         >
-                          Clear
+                          View
                         </Button>
                       )}
                     </div>
@@ -189,7 +183,7 @@ const AttentionPanel = () => {
                               {task.id === 'disputes' && `Khiếu nại: ${item.description}`}
                             </span>
                             <span className="item-sub">
-                              Người yêu cầu: <strong>{item.buyerName || item.raisedByName}</strong> • Trạng thái: <em>{item.status}</em>
+                              Người gửi: <strong>{item.buyerName || item.raisedByName}</strong> • Trạng thái: <em style={{ textTransform: 'capitalize' }}>{item.status}</em>
                             </span>
                           </div>
                           <Tag color={item.status === 'under_review' ? 'orange' : 'blue'} style={{ textTransform: 'capitalize' }}>

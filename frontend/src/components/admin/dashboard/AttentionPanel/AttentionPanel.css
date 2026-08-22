@@ -37,6 +37,11 @@
   gap: 8px;
 }
 
+.attention-task-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .attention-task-row {
   display: flex;
   align-items: center;
@@ -67,17 +72,72 @@
 }
 
 .task-dot.high {
-  background-color: var(--ebay-red);
+  background-color: #e53238;
   box-shadow: 0 0 0 2px rgba(229, 50, 56, 0.2);
 }
 
 .task-dot.medium {
-  background-color: var(--ebay-yellow);
+  background-color: #f5af02;
   box-shadow: 0 0 0 2px rgba(245, 175, 2, 0.2);
+}
+
+.task-dot.low {
+  background-color: #0064d2;
+  box-shadow: 0 0 0 2px rgba(0, 100, 210, 0.2);
 }
 
 .task-dot.neutral {
   background-color: #d1d5db;
+}
+
+.task-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.task-count-badge {
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 22px;
+  text-align: right;
+  font-family: inherit;
+}
+
+.task-count-badge.has-count {
+  color: var(--text-primary);
+}
+
+.task-count-badge.zero-count {
+  color: var(--text-muted);
+}
+
+.ebay-task-btn {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  height: 28px !important;
+  padding: 0 12px !important;
+  border-color: #d1d5db !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--ebay-blue) !important;
+  background-color: #ffffff !important;
+}
+
+.ebay-task-btn:hover {
+  border-color: var(--ebay-blue) !important;
+  color: var(--ebay-blue) !important;
+  background-color: #f0f5ff !important;
+}
+
+.ebay-task-btn.active {
+  background-color: #f0f5ff !important;
+  border-color: var(--ebay-blue) !important;
 }
 
 .task-items-dropdown {
@@ -89,14 +149,13 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: -1px;
 }
 
 .task-dropdown-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 10px;
+  padding: 8px 12px;
   background-color: #ffffff;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
@@ -124,10 +183,4 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 6px;
-}
-
-.ebay-task-btn.disabled {
-  color: var(--text-muted) !important;
-  background: transparent !important;
-  border-color: #e5e7eb !important;
 }
